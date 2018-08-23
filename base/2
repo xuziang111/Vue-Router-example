@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>基本用法</title>
+    <title>动态路由</title>
     <style>
   xmp{
   background:#ccc;
@@ -19,7 +19,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 </head>
 <body>
- <h1>基本用法</h1>
+ <h1>动态路由</h1>
  <h2>html代码不变</h2>
  <h2>javascript代码</h2>
 
@@ -42,13 +42,37 @@ const router = new VueRouter({
   ]
 })
 </xmp>
-在一个路由中设置多段“路径参数”，对应的值都会设置到 $route.params 中。
+<p>在一个路由中设置多段“路径参数”，对应的值都会设置到 $route.params 中。</p>
 <table border="1">
 <thead><tr><th>模式</th>	<th>匹配路径</th>	<th>$route.params</th></tr></thead>
 
 <tr><td>/user/:username</td>	<td>/user/evan</td>	<td>{ username: 'evan' }</td></tr>
 <tr><td>/user/:username/post/:post_id</td>	<td>/user/evan/post/123</td>	<td>{ username: 'evan', post_id: 123 }</td></tr>
 </table>
+<h2>响应路由参数的变化</h2>
+<p>当使用路由参数时，例如从 /user/foo 导航到 /user/bar，<b>原来的组件实例会被复用</b>。因为两个路由都渲染同个组件，比起销毁再创建，复用则显得更加高效。不过，这也意味着<b>组件的生命周期钩子不会再被调用</b>。</p>
+
+<p>复用组件时，想对路由参数的变化作出响应的话，可以简单地 watch (监测变化) $route 对象：</p>
+<xmp>
+const User = {
+  template: '...',
+  watch: {
+    '$route' (to, from) {
+      // 对路由变化作出响应...
+    }
+  }
+}
+</xmp>
+或者使用 2.2 中引入的 'beforeRouteUpdate'
+<xmp>
+const User = {
+  template: '...',
+  beforeRouteUpdate (to, from, next) {
+    // react to route changes...
+    // don't forget to call next()
+  }
+}
+</xmp>
 <script>
     </script>
 </body>
