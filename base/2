@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基本用法</title>
+    <style>
+  xmp{
+  background:#ccc;
+	font-size:16px;
+  }
+  table{
+      border-spacing: 0;
+	 
+  }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+<body>
+ <h1>基本用法</h1>
+ <h2>html代码不变</h2>
+ <h2>javascript代码</h2>
+
+<p>我们经常需要把某种模式匹配到的所有路由，全都映射到同个组件。例如，我们有一个 User 组件，对于所有 ID 各不相同的用户，都要使用这个组件来渲染。那么，我们可以在 vue-router 的路由路径中使用“动态路径参数”(dynamic segment) 来达到这个效果：</p>
+ <xmp>
+//html不变
+//通过$route.params获取路径信息
+const User = {
+  template: '<div>User {{ $route.params.id }}</div>'
+}
+
+const User = {
+  template: '<div>User</div>'
+}
+
+const router = new VueRouter({
+  routes: [
+    // 动态路径参数 以冒号开头
+    { path: '/user/:id', component: User }
+  ]
+})
+</xmp>
+在一个路由中设置多段“路径参数”，对应的值都会设置到 $route.params 中。
+<table border="1">
+<thead><tr><th>模式</th>	<th>匹配路径</th>	<th>$route.params</th></tr></thead>
+
+<tr><td>/user/:username</td>	<td>/user/evan</td>	<td>{ username: 'evan' }</td></tr>
+<tr><td>/user/:username/post/:post_id</td>	<td>/user/evan/post/123</td>	<td>{ username: 'evan', post_id: 123 }</td></tr>
+</table>
+<script>
+    </script>
+</body>
+</html>
